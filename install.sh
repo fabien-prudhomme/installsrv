@@ -14,6 +14,12 @@ do
     configureEnv ${key} $(getEnvValue ${key})
 done
 
+XRDP_USER=$(getEnvValue 'XRDP_USER')
+XRDP_INSTALL=$(getEnvValue 'XRDP_INSTALL')
+XRDP_PASS=$(getEnvValue 'XRDP_PASS')
+XRDP_USER_MAIL=$(getEnvValue 'XRDP_USER_MAIL')
+OS=$(getEnvValue 'OS')
+
 displaybegin "Update du système"
 sudo apt-get update > log 2>&1
 displayEnd "Update du système"
