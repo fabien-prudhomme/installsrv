@@ -48,7 +48,7 @@ displayEnd "Add user ${XRDP_USER} to sudoer"
 
 if [ "${XRDP_INSTALL}" == yes ]; then
     displaybegin "Install LXDE and xrdp"
-        apt install -y lxde
+        apt install -y lxqt
         apt install xrdp -y > log 2>&1
         adduser xrdp ssl-cert > log 2>&1
         systemctl restart xrdp > log 2>&1
@@ -64,8 +64,7 @@ dpkg -i google-chrome-stable_current_amd64.deb > log 2>&1
 displayEnd "google chrome install"
 fi
 
-chown ${XRDP_USER}:${XRDP_USER} ${originalPath}/installUser.sh
-chown ${XRDP_USER}:${XRDP_USER} ${originalPath}/function.sh
+chown -R ${XRDP_USER}:${XRDP_USER} ${originalPath}
 
 runuser -l  ${XRDP_USER} -c "${originalPath}/installUser.sh ${originalPath}"
 
