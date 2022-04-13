@@ -36,16 +36,11 @@ sudo apt-get -y install \
 displayEnd "Install common tools"
 
 displaybegin "Add user ${XRDP_USER}"
+pass=$(perl -e 'print crypt($ARGV[0], "password")' ${XRDP_PASS})
+useradd -m -p "$pass" "${XRDP_USER}" > log 2>&1
+sed "s/^XRDP_PASS=.*$/XRDP_PASS=$pass/" -i .env > log 2>&1
+displayEnd "${XRDP_USER} has been added to system!"
 
-egrep "^${XRDP_USER}" /etc/passwd >/dev/null
-if [ $? -eq 0 ]; then
-  displayEnd "${XRDP_USER} already exists!"
-else
-  pass=$(perl -e 'print crypt($ARGV[0], "password")' ${XRDP_PASS})
-  useradd -m -p "$pass" "${XRDP_USER}" > log 2>&1
-  sed "s/^XRDP_PASS=.*$/XRDP_PASS=$pass/" -i .env > log 2>&1
-  [ $? -eq 0 ] && displayEnd "${XRDP_USER} has been added to system!" || displayEnd "Failed to add a user!"
-fi
 
 displaybegin "Add user ${XRDP_USER} to sudoer"
 usermod -aG sudo ${XRDP_USER} > log 2>&1
