@@ -33,8 +33,19 @@ sudo apt-get -y install \
     wget \
     gnupg-agent \
     fonts-liberation \
-    software-properties-common > log 2>&1
+    software-properties-common  > log 2>&1
 displayEnd "Install common tools"
+
+if [ "${XRDP_INSTALL}" == yes ]; then
+    displaybegin "Install LXDE and xrdp"
+        apt install -y lubuntu-desktop
+        apt install xrdp -y > log 2>&1
+        adduser xrdp ssl-cert > log 2>&1
+        systemctl restart xrdp > log 2>&1
+        systemctl enable xrdp > log 2>&1
+        cp ./02-allow-colord.conf /etc/polkit-1/localauthority.conf.d/02-allow-colord.conf > log 2>&1
+    displayEnd "Install LXDE and xrdp"
+fi
 
 displaybegin "Add user ${XRDP_USER}"
 pass=$(perl -e 'print crypt($ARGV[0], "password")' ${XRDP_PASS})
@@ -47,22 +58,23 @@ usermod -aG sudo ${XRDP_USER} > log 2>&1
 displayEnd "Add user ${XRDP_USER} to sudoer"
 
 if [ "${XRDP_INSTALL}" == yes ]; then
-    displaybegin "Install LXDE and xrdp"
-        apt install -y lxqt
-        apt install xrdp -y > log 2>&1
-        adduser xrdp ssl-cert > log 2>&1
-        systemctl restart xrdp > log 2>&1
-        systemctl enable xrdp > log 2>&1
-        cp ./02-allow-colord.conf /etc/polkit-1/localauthority.conf.d/02-allow-colord.conf > log 2>&1
-    displayEnd "Install LXDE and xrdp"
-fi
-
-if [ "${XRDP_INSTALL}" == yes ]; then
 displaybegin "google chrome install"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > log 2>&1
 dpkg -i google-chrome-stable_current_amd64.deb > log 2>&1
 displayEnd "google chrome install"
 fi
+
+displaybegin "Install lang"
+sudo apt-get -y install \
+    language-pack-gnome-fr \
+    thunderbird-locale-fr \
+    gnome-user-docs-fr \
+    wfrench \
+    firefox-locale-fr \
+    language-pack-gnome-fr \
+    language-pack-fr \
+    language-pack-fr-base > log 2>&1
+displayEnd "Install lang"
 
 chown -R ${XRDP_USER}:${XRDP_USER} ${originalPath}
 
