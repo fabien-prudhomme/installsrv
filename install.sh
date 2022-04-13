@@ -67,6 +67,6 @@ fi
 chown ${XRDP_USER}:${XRDP_USER} ${originalPath}/installUser.sh
 chown ${XRDP_USER}:${XRDP_USER} ${originalPath}/function.sh
 
-runuser -l  ${XRDP_USER} -c "${originalPath}/installUser.sh"
+runuser -l  ${XRDP_USER} -c "${originalPath}/installUser.sh ${originalPath}"
 
 
