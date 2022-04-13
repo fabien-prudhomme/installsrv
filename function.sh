@@ -8,6 +8,7 @@ function displayEnd() {
   echo  -e "[\033[32;1mOK\033[0m] $1"
 }
 
+
 function configureEnv() {
     local key=$1
     local value=$2
