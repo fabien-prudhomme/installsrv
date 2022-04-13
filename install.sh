@@ -71,11 +71,12 @@ echo "################     SSH KEY     #############################"
 
 echo "${XRDP_PASS}" | sudo -S ls -la > log 2>&1
 
+if [ "${XRDP_INSTALL}" == yes ]; then
 displaybegin "google chrome install"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > log 2>&1
 sudo dpkg -i google-chrome-stable_current_amd64.deb > log 2>&1
 displayEnd "google chrome install"
-
+fi
 
 displaybegin "Ajout du repository docker"
 curl -fsSL https://download.docker.com/linux/${OS}/gpg | sudo apt-key add - > log 2>&1
