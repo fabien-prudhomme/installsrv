@@ -21,7 +21,7 @@ function configureEnv() {
 
 function getEnvValue() {
     local key=$1
-    local defaultValue=$(cat ./conf/.env.dist | grep -E "^${key}=(.*)$" | awk -F "${key} *= *" '{print $2}')
+    local defaultValue=$(cat ./.env.dist | grep -E "^${key}=(.*)$" | awk -F "${key} *= *" '{print $2}')
 
     case ${key} in
         DOCKER_UID)
