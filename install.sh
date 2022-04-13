@@ -32,6 +32,7 @@ sudo apt-get -y install \
     perl \
     wget \
     gnupg-agent \
+    fonts-liberation \
     software-properties-common > log 2>&1
 displayEnd "Install common tools"
 
@@ -63,6 +64,9 @@ dpkg -i google-chrome-stable_current_amd64.deb > log 2>&1
 displayEnd "google chrome install"
 fi
 
-runuser -l  ${XRDP_USER} -c './installUser.sh'
+chown ${XRDP_USER}:${XRDP_USER} ${originalPath}/installUser.sh
+chown ${XRDP_USER}:${XRDP_USER} ${originalPath}/function.sh
+
+runuser -l  ${XRDP_USER} -c "${originalPath}/installUser.sh"
 
 
